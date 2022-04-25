@@ -21,7 +21,7 @@ namespace BookTrade.Models
 
         public bool TradeCompleted { get; set; }
 
-        //public bool TradeDelivered { get; set; }
+        public bool TradeDelivered { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

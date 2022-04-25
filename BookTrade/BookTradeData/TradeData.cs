@@ -87,10 +87,16 @@ namespace BookTrade.BookTradeData
 
                 var sendTrade = new FindTradeDetails()
                 {
+                    TradeId = item.TradeId,
                     FromUser = fromUser,
                     ToUser = toUser,
                     RequestedBook = requestedBook,
-                    TradingBook = tradingBook
+                    TradingBook = tradingBook,
+                    TradeAccepted = item.TradeAccepted,
+                    TradeCompleted = item.TradeCompleted,
+                    TradeDelivered = item.TradeDelivered,
+                    CreatedDate = item.CreatedDate,
+                    ConfirmedDate = item.ConfirmedDate
                 };
 
                 sendTradesList.Add(sendTrade);
@@ -115,10 +121,16 @@ namespace BookTrade.BookTradeData
 
                 var sendTrade = new FindTradeDetails()
                 {
+                    TradeId = item.TradeId,
                     FromUser = fromUser,
                     ToUser = toUser,
                     RequestedBook = requestedBook,
-                    TradingBook = tradingBook
+                    TradingBook = tradingBook,
+                    TradeAccepted = item.TradeAccepted,
+                    TradeCompleted = item.TradeCompleted,
+                    TradeDelivered = item.TradeDelivered,
+                    CreatedDate = item.CreatedDate,
+                    ConfirmedDate = item.ConfirmedDate
                 };
 
                 sendTradesList.Add(sendTrade);
