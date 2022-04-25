@@ -5,6 +5,7 @@ namespace BookTrade.Models
 {
     public class TradeDetails
     {
+        // PK for table
         [Key]
         public Guid TradeId { get; set; }
 
@@ -19,5 +20,9 @@ namespace BookTrade.Models
         public bool TradeAccepted { get; set; }
 
         public bool TradeCompleted { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime ConfirmedDate { get; set; }
     }
 }

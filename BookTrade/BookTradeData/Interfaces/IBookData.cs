@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace BookTrade.BookTradeData.Interfaces
 {
+    // BookData Interface
     public interface IBookData
     {
+        #region Methods
         List<Book> GetBooks();
 
         Book GetBooks(Guid id);
@@ -19,5 +21,6 @@ namespace BookTrade.BookTradeData.Interfaces
         List<Book> GetAllBooksByUser(Guid id);
 
         List<Book> FindBook(FindBook book);
+        #endregion
     }
 }

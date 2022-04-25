@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookTrade.Data
 {
+    // DbContext class for interacting with the database
     public class BookTradeContext:DbContext
     {
         public BookTradeContext(DbContextOptions<BookTradeContext> options) : base(options)

@@ -6,16 +6,24 @@ using System;
 
 namespace BookTrade.Controllers
 {
+    // BookController for handling Book API calls
     [ApiController]
     public class BookController : ControllerBase
     {
+        #region Global Variables
         private readonly IBookData _bookData;
+        #endregion
 
+        #region Constructor
         public BookController(IBookData bookData)
         {
             _bookData = bookData;
         }
+        #endregion
 
+        #region Public Methods
+
+        // API for getting all books
         [HttpGet]
         [Route("api/[controller]")]
         public IActionResult GetBooks()
@@ -23,6 +31,7 @@ namespace BookTrade.Controllers
             return Ok(_bookData.GetBooks());
         }
 
+        // API for getting a specified book
         [HttpGet]
         [Route("api/[controller]/{id}")]
         public IActionResult GetBooks(Guid id)
@@ -34,6 +43,7 @@ namespace BookTrade.Controllers
                 return NotFound($"Book with Id:{id} was not found");
         }
 
+        // API for creating a book for a specified user
         [HttpPost]
         [Route("api/[controller]/{id}")]
         public IActionResult AddBooks(Book book, Guid id)
@@ -45,6 +55,7 @@ namespace BookTrade.Controllers
                 return BadRequest("Book Not Created");
         }
 
+        // API for getting all books
         [HttpPost]
         [Route("api/[controller]/getallbooksbyuser/{id}")]
         public IActionResult GetAllBooksByUser(Guid id)
@@ -57,6 +68,7 @@ namespace BookTrade.Controllers
                 return NotFound("$Books not found for user");
         }
 
+        // API for deleting a specified book
         [HttpDelete]
         [Route("api/[controller]/{id}")]
         public IActionResult DeleteBook(Guid id)
@@ -72,6 +84,7 @@ namespace BookTrade.Controllers
             return NotFound($"Book with Id:{id} was not found");
         }
 
+        // API for editing a specified book
         [HttpPatch]
         [Route("api/[controller]/{id}")]
         public IActionResult EditBook(Guid id, Book book)
@@ -88,6 +101,7 @@ namespace BookTrade.Controllers
             return NotFound($"Book with Id:{id} was not found");
         }
 
+        // API for finding book by title, author and genre
         [HttpPost]
         [Route("api/[controller]/findbooks")]
         public IActionResult FindBooks(FindBook book)
@@ -99,5 +113,6 @@ namespace BookTrade.Controllers
             else
                 return NotFound("Books not found");
         }
+        #endregion
     }
 }

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace BookTrade.BookTradeData.Interfaces
 {
+    // TradeData Interface
     public interface ITradeData
     {
+        #region Methods
         List<TradeDetails> GetTradeDetails();
 
         TradeDetails GetTradeDetails(Guid id);
@@ -21,5 +23,6 @@ namespace BookTrade.BookTradeData.Interfaces
         TradeDetails AcceptTradeDetailsRequest(Guid id);
 
         TradeDetails CancelTradeDetailsRequest(Guid id);
+        #endregion
     }
 }

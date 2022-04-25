@@ -6,15 +6,23 @@ using System.Linq;
 
 namespace BookTrade.BookTradeData
 {
+    // UserData class for handling User related operation
     public class UserData : IUserData
     {
+        #region Global variables
         private readonly BookTradeContext _bookTradeContext;
+        #endregion
 
+        #region Constructor
         public UserData(BookTradeContext bookTradeContext)
         {
             _bookTradeContext = bookTradeContext;
         }
+        #endregion
 
+        #region Public Methods
+
+        // Method for adding a new User
         public User AddUser(User user)
         {
             var userfound = _bookTradeContext.Users.Where(x=>x.Email == user.Email).FirstOrDefault();
@@ -29,12 +37,14 @@ namespace BookTrade.BookTradeData
             return null;
         }
 
+        // Method for deleting specified user
         public void DeleteUser(User user)
         {
             _bookTradeContext.Remove(user);
             _bookTradeContext.SaveChanges();
         }
 
+        // Method for editing specified user
         public User EditUser(User user)
         {
             var existingUser = _bookTradeContext.Users.Find(user.UserId);
@@ -54,44 +64,59 @@ namespace BookTrade.BookTradeData
             return user;
         }
 
+        // Method for getting specified user
         public User GetUsers(Guid id)
         {
-            var user = _bookTradeContext.Users.Find(id);
-
-            return user;
+            return _bookTradeContext.Users.Find(id);
         }
 
+        // Method for getting all users
         public List<User> GetUsers()
         {
             return _bookTradeContext.Users.ToList();
         }
 
-        public User LoginUser(Login user)
+        // Method for checking user login details
+        public User LoginUser(Login login)
         {
-            var userFound = _bookTradeContext.Users.Where(x=> x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+            var emailFound = _bookTradeContext.Users.FirstOrDefault(x => x.Email == login.Email);
+            if (emailFound != null)
+            {
+                var userFound =  _bookTradeContext.Users.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefault();
 
-            return userFound != null ? userFound : null;
+                if (userFound != null)
+                    return userFound;
+                else
+                    return new User();
+            }
+
+            else
+            {
+                return null;
+            }
         }
 
-        public Login UpdateUserPassword(Login user)
+        // Method for updating user password
+        public Login UpdateUserPassword(Login login)
         {
-            var existingUser = _bookTradeContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+            var existingUser = _bookTradeContext.Users.Where(x => x.Email == login.Email).FirstOrDefault();
 
             if (existingUser != null)
             {
-                if (existingUser.Password != user.Password)
+                if (existingUser.Password != login.Password)
                 {
-                    existingUser.Password = user.Password;
+                    existingUser.Password = login.Password;
                     _bookTradeContext.Users.Update(existingUser);
                     _bookTradeContext.SaveChanges();
 
-                    return user;
+                    return login;
                 }
 
-                user.Password = null;
+                login.Password = null;
             }
 
             return null;
         }
+        #endregion
     }
 }

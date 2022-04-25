@@ -7,15 +7,23 @@ using System.Linq;
 
 namespace BookTrade.BookTradeData
 {
+    // BookData class for handling Book related operations
     public class BookData:IBookData
     {
+        #region Global variables
         private readonly BookTradeContext _bookTradeContext;
+        #endregion
 
+        #region Constructor
         public BookData(BookTradeContext bookTradeContext)
         {
             _bookTradeContext = bookTradeContext;
         }
+        #endregion
 
+        #region Public Methods
+
+        // Method for adding a new book
         public Book AddBook(Book book, Guid id)
         {
             book.BookId = Guid.NewGuid();
@@ -35,12 +43,14 @@ namespace BookTrade.BookTradeData
             }
         }
 
+        // Method for deleting a book
         public void DeleteBook(Book book)
         {
             _bookTradeContext.Remove(book);
             _bookTradeContext.SaveChanges();
         }
 
+        // Method for editing a book
         public Book EditBook(Book book)
         {
             var existingBook = _bookTradeContext.Books.Find(book.BookId);
@@ -62,55 +72,60 @@ namespace BookTrade.BookTradeData
             return book;
         }
 
+        // Method for getting all books
         public List<Book> GetBooks()
         {
             return _bookTradeContext.Books.ToList();
         }
 
+        // Method for getting specified book
         public Book GetBooks(Guid id)
         {
             return _bookTradeContext.Books.Find(id);
         }
 
+        // Method for getting all books by a specified user
         public List<Book> GetAllBooksByUser(Guid id)
         {
             return _bookTradeContext.Books.Where(x=>x.CreatedByUserId == id && !x.IsTraded).ToList();
         }
 
+        // Method for book search using title, author and genre
         public List<Book> FindBook(FindBook book)
         {
             if (!string.IsNullOrEmpty(book.Title) && !string.IsNullOrEmpty(book.Author) && !string.IsNullOrEmpty(book.Genre))
             {
-                return _bookTradeContext.Books.Where(x => x.Title == book.Title && x.Author == book.Author && x.Genre == book.Genre).ToList();
+                return _bookTradeContext.Books.Where(x => x.Title.Contains(book.Title) && x.Author.Contains(book.Author) && x.Genre.Contains(book.Genre)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Title) && !string.IsNullOrEmpty(book.Author))
             {
-                return _bookTradeContext.Books.Where(x => x.Title == book.Title && x.Author == book.Author).ToList();
+                return _bookTradeContext.Books.Where(x => x.Title.Contains(book.Title) && x.Author.Contains(book.Author)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Title) && !string.IsNullOrEmpty(book.Genre))
             {
-                return _bookTradeContext.Books.Where(x => x.Title == book.Title && x.Genre == book.Genre).ToList();
+                return _bookTradeContext.Books.Where(x => x.Title.Contains(book.Title) && x.Genre.Contains(book.Genre)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Author) && !string.IsNullOrEmpty(book.Genre))
             {
-                return _bookTradeContext.Books.Where(x => x.Author == book.Author && x.Genre == book.Genre).ToList();
+                return _bookTradeContext.Books.Where(x => x.Author.Contains(book.Author) && x.Genre.Contains(book.Genre)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Title))
             {
-                return _bookTradeContext.Books.Where(x => x.Title == book.Title).ToList();
+                return _bookTradeContext.Books.Where(x => x.Title.Contains(book.Title)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Author))
             {
-                return _bookTradeContext.Books.Where(x => x.Author == book.Author).ToList();
+                return _bookTradeContext.Books.Where(x => x.Author.Contains(book.Author)).ToList();
             }
             else if (!string.IsNullOrEmpty(book.Genre))
             {
-                return _bookTradeContext.Books.Where(x => x.Genre == book.Genre).ToList();
+                return _bookTradeContext.Books.Where(x => x.Genre.Contains(book.Genre)).ToList();
             }
             else
             {
                 return null;
             }
         }
+        #endregion
     }
 }

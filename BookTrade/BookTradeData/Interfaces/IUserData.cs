@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace BookTrade.BookTradeData
 {
+    // UserData Interface
     public interface IUserData
     {
+        #region Methods
         List<User> GetUsers();
 
         User GetUsers(Guid id);
@@ -19,5 +21,6 @@ namespace BookTrade.BookTradeData
         User LoginUser(Login login);
 
         Login UpdateUserPassword(Login login);
+        #endregion
     }
 }
