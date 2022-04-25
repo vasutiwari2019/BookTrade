@@ -66,6 +66,7 @@ namespace BookTrade.BookTradeData
                 existingBook.TradeType = book.TradeType;
                 existingBook.IsTraded = book.IsTraded;
                 existingBook.CreatedDate = DateTime.Now;
+                existingBook.ImageUrl = book.ImageUrl;
                 _bookTradeContext.Books.Update(existingBook);
                 _bookTradeContext.SaveChanges();
             }

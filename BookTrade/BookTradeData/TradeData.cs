@@ -72,15 +72,59 @@ namespace BookTrade.BookTradeData
         }
 
         // Method for getting all trades created by User
-        public List<TradeDetails> UserTradeDetailsRequested(Guid fromUserId)
+        public List<FindTradeDetails> UserTradeDetailsRequested(Guid fromUserId)
         {
-            return _bookTradeContext.TradeDetails.Where(x => x.FromUserId == fromUserId && x.TradeAccepted && !x.TradeCompleted).ToList();
+            List <FindTradeDetails> sendTradesList = new List<FindTradeDetails>();
+
+            var tradeFound = _bookTradeContext.TradeDetails.Where(x => x.FromUserId == fromUserId && x.TradeAccepted && !x.TradeCompleted).ToList();
+
+            foreach(var item in tradeFound)
+            {
+                var fromUser = _bookTradeContext.Users.Find(item.FromUserId);
+                var toUser = _bookTradeContext.Users.Find(item.ToUserId);
+                var requestedBook = _bookTradeContext.Books.Find(item.RequestedBookId);
+                var tradingBook = _bookTradeContext.Books.Find(item.TradingBookId);
+
+                var sendTrade = new FindTradeDetails()
+                {
+                    FromUser = fromUser,
+                    ToUser = toUser,
+                    RequestedBook = requestedBook,
+                    TradingBook = tradingBook
+                };
+
+                sendTradesList.Add(sendTrade);
+            }
+
+            return sendTradesList;
         }
 
         // Method for getting all trades received by User
-        public List<TradeDetails> UserTradeDetailsReceived(Guid fromUserId)
+        public List<FindTradeDetails> UserTradeDetailsReceived(Guid fromUserId)
         {
-            return _bookTradeContext.TradeDetails.Where(x => x.ToUserId == fromUserId && x.TradeAccepted && !x.TradeCompleted).ToList();
+            List<FindTradeDetails> sendTradesList = new List<FindTradeDetails>();
+
+            var tradeFound = _bookTradeContext.TradeDetails.Where(x => x.ToUserId == fromUserId && x.TradeAccepted && !x.TradeCompleted).ToList();
+
+            foreach (var item in tradeFound)
+            {
+                var fromUser = _bookTradeContext.Users.Find(item.FromUserId);
+                var toUser = _bookTradeContext.Users.Find(item.ToUserId);
+                var requestedBook = _bookTradeContext.Books.Find(item.RequestedBookId);
+                var tradingBook = _bookTradeContext.Books.Find(item.TradingBookId);
+
+                var sendTrade = new FindTradeDetails()
+                {
+                    FromUser = fromUser,
+                    ToUser = toUser,
+                    RequestedBook = requestedBook,
+                    TradingBook = tradingBook
+                };
+
+                sendTradesList.Add(sendTrade);
+            }
+
+            return sendTradesList;
         }
 
         // Method for accepting trade request

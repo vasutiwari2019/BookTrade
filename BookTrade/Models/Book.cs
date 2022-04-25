@@ -44,6 +44,9 @@ namespace BookTrade.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        [Required]
+        public string ImageUrl { get; set; }
+
         #endregion
 
     }

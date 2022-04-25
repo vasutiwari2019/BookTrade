@@ -16,9 +16,9 @@ namespace BookTrade.BookTradeData.Interfaces
 
         void DeleteTrade(TradeDetails tradeDetails);
 
-        List<TradeDetails> UserTradeDetailsRequested(Guid fromUserId);
+        List<FindTradeDetails> UserTradeDetailsRequested(Guid fromUserId);
 
-        List<TradeDetails> UserTradeDetailsReceived(Guid fromUserId);
+        List<FindTradeDetails> UserTradeDetailsReceived(Guid fromUserId);
 
         TradeDetails AcceptTradeDetailsRequest(Guid id);
 
