@@ -16,7 +16,7 @@ namespace BookTrade.Models
         public Guid RequestedBookId { get; set; }
 
         public Guid TradingBookId { get; set; }
-        
+
         public bool TradeAccepted { get; set; }
 
         public bool TradeCompleted { get; set; }

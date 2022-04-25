@@ -50,7 +50,7 @@ namespace BookTrade.Controllers
         {
             var usercreated = _userData.AddUser(user);
             if (usercreated != null)
-                return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + "/" + user.UserId, user);
+                return Ok(usercreated);
             else
                 return BadRequest("email id already exists");
         }
@@ -96,13 +96,13 @@ namespace BookTrade.Controllers
             var userFound = _userData.LoginUser(user);
 
             if(userFound == null)
+            {
                 return NotFound("Login details not found");
-
+            }
             else if (userFound.Email != null)
             {
                 return Ok(userFound);
             }
-
             else
             {
                 return BadRequest("Wrong Password");
@@ -120,12 +120,10 @@ namespace BookTrade.Controllers
             {
                 return Ok(userFound);
             }
-
             else if(userFound?.Password == null)
             {
                 return BadRequest("Same Password");
             }
-
             else
             {
                 return NotFound("user password not updated");

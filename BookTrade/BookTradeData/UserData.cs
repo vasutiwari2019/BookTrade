@@ -84,12 +84,8 @@ namespace BookTrade.BookTradeData
             {
                 var userFound =  _bookTradeContext.Users.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefault();
 
-                if (userFound != null)
-                    return userFound;
-                else
-                    return new User();
+                return userFound ?? new User();
             }
-
             else
             {
                 return null;

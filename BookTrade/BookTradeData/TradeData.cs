@@ -93,6 +93,17 @@ namespace BookTrade.BookTradeData
                 tradeDetails.TradeCompleted = true;
                 tradeDetails.ConfirmedDate = DateTime.Now;
                 _bookTradeContext.TradeDetails.Update(tradeDetails);
+
+                var fromUserBookID = tradeDetails.TradingBookId;
+                var toUserBookID = tradeDetails.RequestedBookId;
+
+                var fromUser = _bookTradeContext.Books.Where(x=> x.BookId == fromUserBookID).FirstOrDefault();
+                var toUser = _bookTradeContext.Books.Where(x => x.BookId == toUserBookID).FirstOrDefault();
+
+                fromUser.IsTraded = true;
+                toUser.IsTraded = true;
+                _bookTradeContext.Books.Update(fromUser);
+                _bookTradeContext.Books.Update(toUser);
                 _bookTradeContext.SaveChanges();
                 return tradeDetails;
             }
